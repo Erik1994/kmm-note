@@ -5,3 +5,15 @@ plugins {
     alias(libs.plugins.kotlinAndroid).apply(false)
     alias(libs.plugins.kotlinMultiplatform).apply(false)
 }
+
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath(libs.gradle.plugin)
+        classpath(libs.hilt.android.gradle.plugin)
+    }
+}
