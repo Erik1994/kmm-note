@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kmm Notes</string>
+    <string name="all_notes">All notes</string>
+    <string name="enter_a_title">Enter a title…</string>
+    <string name="enter_a_content">Enter a content…</string>
+</resources>

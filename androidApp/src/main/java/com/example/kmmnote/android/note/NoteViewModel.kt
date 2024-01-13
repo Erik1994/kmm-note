@@ -3,6 +3,7 @@ package com.example.kmmnote.android.note
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kmmnote.android.common.BaseViewModel
 import com.example.kmmnote.domain.note.Note
 import com.example.kmmnote.domain.note.NoteDataSource
 import com.example.kmmnote.domain.note.usecase.SearchNoteUseCase
@@ -16,9 +17,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NoteViewModel @Inject constructor(
-    private val noteDataSource: NoteDataSource,
-    private val savedStateHandle: SavedStateHandle
-): ViewModel() {
+    noteDataSource: NoteDataSource,
+    savedStateHandle: SavedStateHandle
+) : BaseViewModel(noteDataSource, savedStateHandle) {
     private val searchNoteUseCase: SearchNoteUseCase = SearchNoteUseCaseImpl()
 
     private val notes = savedStateHandle.getStateFlow(NOTES_KEY, emptyList<Note>())
@@ -40,7 +41,7 @@ class NoteViewModel @Inject constructor(
     }
 
     fun onSearchTextChange(text: String) {
-        savedStateHandle[SEARCH_TEXT_KEY] = searchText
+        savedStateHandle[SEARCH_TEXT_KEY] = text
     }
 
     fun onToggleSearch() {
