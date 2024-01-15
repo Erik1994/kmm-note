@@ -2,16 +2,20 @@ package com.example.kmmnote.android.notedetail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.example.kmmnote.android.R
 import com.example.kmmnote.android.common.BaseViewModel
+import com.example.kmmnote.android.helper.UiText
 import com.example.kmmnote.android.navigation.Route
 import com.example.kmmnote.domain.note.Note
 import com.example.kmmnote.domain.note.NoteDataSource
 import com.example.kmmnote.domain.time.DateTimeUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -51,6 +55,8 @@ class NoteDetailViewModel @Inject constructor(
         NoteDetailState()
     )
 
+    private val _errorMessage = Channel<UiText>()
+    val errorMessage = _errorMessage.receiveAsFlow()
     private val _hasNoteBeenSaved = MutableStateFlow(false)
     val hasNoteBeenSaved = _hasNoteBeenSaved.asStateFlow()
     private var existingNoteId: Long? = null
@@ -87,16 +93,20 @@ class NoteDetailViewModel @Inject constructor(
 
     fun saveNote() {
         viewModelScope.launch {
-            noteDataSource.insertNote(
-                Note(
-                    id = existingNoteId,
-                    title = noteTitle.value,
-                    content = noteContent.value,
-                    colorHex = noteColor.value,
-                    created = DateTimeUtil.now()
+            if (noteTitle.value.isEmpty()) {
+                _errorMessage.send(UiText.StringResource(R.string.title_error_message))
+            } else {
+                noteDataSource.insertNote(
+                    Note(
+                        id = existingNoteId,
+                        title = noteTitle.value,
+                        content = noteContent.value,
+                        colorHex = noteColor.value,
+                        created = DateTimeUtil.now()
+                    )
                 )
-            )
-            _hasNoteBeenSaved.value = true
+                _hasNoteBeenSaved.value = true
+            }
         }
     }
 

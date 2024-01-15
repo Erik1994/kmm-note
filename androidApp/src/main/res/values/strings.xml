@@ -4,4 +4,5 @@
     <string name="all_notes">All notes</string>
     <string name="enter_a_title">Enter a title…</string>
     <string name="enter_a_content">Enter a content…</string>
+    <string name="title_error_message">Title field is mandatory</string>
 </resources>

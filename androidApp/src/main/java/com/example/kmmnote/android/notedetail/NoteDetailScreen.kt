@@ -1,5 +1,6 @@
 package com.example.kmmnote.android.notedetail
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -28,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -35,8 +37,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.kmmnote.android.R
+import com.example.kmmnote.android.helper.UiText
 import com.example.kmmnote.android.note.HideableSearchTextField
 import com.example.kmmnote.android.note.NoteItem
+import kotlinx.coroutines.flow.collect
 
 @Composable
 fun NoteDetailScreen(
@@ -44,14 +48,24 @@ fun NoteDetailScreen(
     viewModel: NoteDetailViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit
 ) {
+    val context = LocalContext.current
     val state by viewModel.state.collectAsState()
     val hasNoteBeenSaved by viewModel.hasNoteBeenSaved.collectAsState()
+    val errorMessage by viewModel.errorMessage.collectAsState(initial = UiText.DynamicString(""))
 
     LaunchedEffect(key1 = hasNoteBeenSaved) {
         if (hasNoteBeenSaved) {
             onNavigateBack()
         }
     }
+
+    LaunchedEffect(key1 = errorMessage) {
+        val message = errorMessage.asString(context)
+        if (message.isNotBlank()) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
