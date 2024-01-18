@@ -80,7 +80,7 @@ class NoteDetailViewModel @Inject constructor(
     }
 
     fun onNoteContentChanged(content: String) {
-        savedStateHandle[CONTENT_TEXT_FOCUSED_KEY] = content
+        savedStateHandle[NOTE_CONTENT_KEY] = content
     }
 
     fun onNoteTitleFocusChanged(isFocused: Boolean) {

@@ -54,11 +54,13 @@ fun NoteItem(
             Text(
                 text = note.title,
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 20.sp
+                fontSize = 20.sp,
+                color = Color.DarkGray
             )
             Icon(
                 imageVector = Icons.Default.Close,
                 contentDescription = "Delete note",
+                tint = Color.DarkGray,
                 modifier = Modifier
                     .clickable(MutableInteractionSource(), null) {
                         onDeleteClick()
@@ -66,7 +68,7 @@ fun NoteItem(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = note.content, fontWeight = FontWeight.Light)
+        Text(text = note.content, fontWeight = FontWeight.Light, color = Color.DarkGray)
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = formattedDate,

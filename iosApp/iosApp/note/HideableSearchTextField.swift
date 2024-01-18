@@ -25,11 +25,11 @@ struct HideableSearchTextField<Destination: View>: View {
             }
             Button(action: onSearchToggled) {
                 Image(systemName: isSearchActive ? "xmark" : "magnifyingglass")
-                    .foregroundColor(.black)
+                    .foregroundColor(.white)
             }
             NavigationLink(destination: destinationProvider()) {
                 Image(systemName: "plus")
-                    .foregroundColor(.black)
+                    .foregroundColor(.white)
             }
         }
     }

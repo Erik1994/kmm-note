@@ -19,6 +19,7 @@ struct NoteItem: View {
                 Text(note.title)
                     .font(.title3)
                     .fontWeight(.semibold)
+                    .foregroundColor(.black)
                 Spacer()
                 Button(action: onDeleteClick) {
                     Image(systemName: "xmark").foregroundColor(.black)
@@ -27,11 +28,13 @@ struct NoteItem: View {
             Text(note.content)
                 .fontWeight(.light)
                 .padding(.bottom, 3)
+                .foregroundColor(.black)
             HStack {
                 Spacer()
                 Text(DateTimeUtil().formatNoteData(dateTime: note.created))
                     .font(.footnote)
                     .fontWeight(.light)
+                    .foregroundColor(.black)
             }
         }
         .padding()

@@ -39,24 +39,23 @@ struct NoteScreen: View {
                     Text("All notes")
                         .font(.title2)
                 }
-                
-                List {
-                    ForEach(noteViewModel.filteredNotes, id: \.self.id) { note in
-                        Button(action:{
-                            isNoteSelcted = true
-                            selectedNoteId = note.id?.int64Value
-                        }) {
-                            NoteItem(note: note, onDeleteClick: {
-                                noteViewModel.deleteNoteById(id: note.id?.int64Value)
-                            })
-                        }
-                    }
-                }.onAppear {
-                    noteViewModel.loadNotes()
-                }
-                .listStyle(.plain)
-                .listRowSeparator(.hidden)
             }
+            List {
+                ForEach(noteViewModel.filteredNotes, id: \.self.id) { note in
+                    Button(action:{
+                        isNoteSelcted = true
+                        selectedNoteId = note.id?.int64Value
+                    }) {
+                        NoteItem(note: note, onDeleteClick: {
+                            noteViewModel.deleteNoteById(id: note.id?.int64Value)
+                        })
+                    }
+                }
+            }.onAppear {
+                noteViewModel.loadNotes()
+            }
+            .listStyle(.plain)
+            .listRowSeparator(.hidden)
         }.onAppear {
             noteViewModel.setNouteDataSource(noteDataSource: noteDataSource)
         }

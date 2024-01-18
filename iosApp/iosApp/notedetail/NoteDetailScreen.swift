@@ -23,9 +23,17 @@ struct NoteDetailScreen: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            TextField("Enter a title...", text: $viewModel.noteTitle)
+            TextField("", text: $viewModel.noteTitle)
                 .font(.title)
+                .foregroundColor(.black)
+                .placeholder(when: viewModel.noteTitle.isEmpty, placeholder: {
+                    Text("Enter a title...").foregroundColor(.black)
+                })
             TextField("Enter a content...", text: $viewModel.noteContent)
+                .foregroundColor(.black)
+                .placeholder(when: viewModel.noteContent.isEmpty, placeholder: {
+                    Text("Enter a content...").foregroundColor(.black)
+                })
             Spacer()
         }.toolbar(content: {
             Button(action: {
