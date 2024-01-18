@@ -26,6 +26,7 @@ struct NoteDetailScreen: View {
             TextField("Enter a title...", text: $viewModel.noteTitle)
                 .font(.title)
             TextField("Enter a content...", text: $viewModel.noteContent)
+            Spacer()
         }.toolbar(content: {
             Button(action: {
                 viewModel.saveNote {

@@ -27,10 +27,10 @@ struct NoteScreen: View {
                 NavigationLink(destination: NoteDetailScreen(noteDataSource: self.noteDataSource, noteId: selectedNoteId), isActive: $isNoteSelcted){
                     EmptyView()
                 }.hidden()
-                HideableSearchTextField<EmptyView>(onSearchToggled: {
+                HideableSearchTextField<NoteDetailScreen>(onSearchToggled: {
                     noteViewModel.toggleIsSearchActive()
                 }, destinationProvider: {
-                    EmptyView()
+                    NoteDetailScreen(noteDataSource: noteDataSource, noteId: selectedNoteId)
                 }, isSearchActive: noteViewModel.isSearchActive, searchText: $noteViewModel.searchText)
                 .frame(maxWidth: .infinity, minHeight: 40)
                 .padding()
